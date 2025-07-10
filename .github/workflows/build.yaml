@@ -5,6 +5,9 @@ on:
     branches: ["master", "main"]
     tags: [ "v*" ]
 
+  workflow_dispatch:
+
+
 jobs:
   build:
     runs-on: ubuntu-24.04
