@@ -1,4 +1,4 @@
-FROM node:22.17-alpine3.22 AS builder
+FROM node:22.22-alpine3.23 AS builder
 WORKDIR /app
 COPY . /app
 RUN sed -i 's#dl-cdn.alpinelinux.org#mirrors.tuna.tsinghua.edu.cn#g' /etc/apk/repositories && \
@@ -8,7 +8,7 @@ RUN sed -i 's#dl-cdn.alpinelinux.org#mirrors.tuna.tsinghua.edu.cn#g' /etc/apk/re
     npm install -g node-gyp && \
     npm install && npm run dist
 
-FROM node:22.17-alpine3.22
+FROM node:22.22-alpine3.23
 WORKDIR /app
 COPY --from=builder /app/dist /app/dist
 COPY --from=builder /app/node_modules /app/node_modules
@@ -17,6 +17,6 @@ RUN sed -i 's#dl-cdn.alpinelinux.org#mirrors.tuna.tsinghua.edu.cn#g' /etc/apk/re
     rm -rf /var/cache/apk/* && \
     ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo "Asia/Shanghai" >/etc/timezone
 
-EXPOSE 8000
+EXPOSE 8000 8443
 
 CMD [ "/sbin/tini", "--", "node", "dist/index.js" ]
