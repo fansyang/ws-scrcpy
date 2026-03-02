@@ -17,6 +17,7 @@ RUN sed -i 's#dl-cdn.alpinelinux.org#mirrors.tuna.tsinghua.edu.cn#g' /etc/apk/re
     rm -rf /var/cache/apk/* && \
     ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo "Asia/Shanghai" >/etc/timezone
 
-EXPOSE 8000 8443
+EXPOSE 8000
 
 CMD [ "/sbin/tini", "--", "node", "dist/index.js" ]
+
